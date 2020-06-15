@@ -9,13 +9,17 @@ import { EmployeeService } from '../employees/employee.service'
   styleUrls: ['./list-employees.component.css']
 })
 export class ListEmployeesComponent implements OnInit {
-
-  employees:Employee[];
+  datafromChild: Employee;
+  employees: Employee[];
   constructor(private _employeeService: EmployeeService) {
   }
 
   ngOnInit() {
-    this.employees=this._employeeService.getEmployees();
+    this.employees = this._employeeService.getEmployees();
+  }
+
+  handleNotify(eventData: Employee) {
+    this.datafromChild = eventData;
   }
 
 }
