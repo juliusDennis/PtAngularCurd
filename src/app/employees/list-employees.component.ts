@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Employee } from '../models/employee.model';
 import { EmployeeService } from '../employees/employee.service'
+import{Router} from '@angular/router'
 
 
 @Component({
@@ -9,17 +10,16 @@ import { EmployeeService } from '../employees/employee.service'
   styleUrls: ['./list-employees.component.css']
 })
 export class ListEmployeesComponent implements OnInit {
-  datafromChild: Employee;
+ 
   employees: Employee[];
-  constructor(private _employeeService: EmployeeService) {
+  constructor(private _employeeService: EmployeeService,private _router:Router) {
   }
 
   ngOnInit() {
     this.employees = this._employeeService.getEmployees();
   }
 
-  handleNotify(eventData: Employee) {
-    this.datafromChild = eventData;
+  onClick(employeeId:number){
+    this._router.navigate(['/employees',employeeId]);
   }
-
 }

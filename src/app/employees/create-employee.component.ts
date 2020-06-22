@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Department } from '../models/department.model'
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { Employee } from '../models/employee.model';
-import {Router} from '@angular/router'
+import { Router } from '@angular/router'
 import { EmployeeService } from './employee.service';
 
 @Component({
@@ -13,10 +13,11 @@ import { EmployeeService } from './employee.service';
 })
 export class CreateEmployeeComponent implements OnInit {
 
-  previewPhoto =false;
+  @ViewChild('employeeForm', { static: false }) public createEmployeeForm: NgForm;
+  previewPhoto = false;
   datePickerConfig: Partial<BsDatepickerConfig>;
 
-  employee:Employee={
+  employee: Employee = {
     id: null,
     name: null,
     gender: null,
@@ -29,14 +30,14 @@ export class CreateEmployeeComponent implements OnInit {
     photoPath: null
   };
 
-  departments:Department[]=[
+  departments: Department[] = [
     { id: 1, name: 'Help Desk' },
     { id: 2, name: 'HR' },
     { id: 3, name: 'IT' },
     { id: 4, name: 'Payroll' }
   ]
 
-  constructor(private _employeeService:EmployeeService,private _router:Router) { 
+  constructor(private _employeeService: EmployeeService, private _router: Router) {
     this.datePickerConfig = Object.assign({},
       {
         containerClass: 'theme-dark-blue',
@@ -44,8 +45,8 @@ export class CreateEmployeeComponent implements OnInit {
       });
   }
 
-  togglePhotoPreview(){
-    this.previewPhoto=!this.previewPhoto;
+  togglePhotoPreview() {
+    this.previewPhoto = !this.previewPhoto;
   }
 
   ngOnInit() {
