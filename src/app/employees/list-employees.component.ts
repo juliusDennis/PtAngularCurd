@@ -26,11 +26,6 @@ export class ListEmployeesComponent implements OnInit {
     this.filteredEmployees = this.filterEmployees(value);
   }
 
-  changeEmployeeName() {
-    this.employees[0].name = 'Jordan';
-    this.filteredEmployees = this.employees;
-  }
-
   constructor(private _employeeService: EmployeeService,
     private _router: Router,
     private _route: ActivatedRoute) {
@@ -43,18 +38,19 @@ export class ListEmployeesComponent implements OnInit {
       this.filteredEmployees = this.employees;
     }
   }
-
-
+  
   ngOnInit() {
   }
-
+  
   filterEmployees(searchString: string) {
     return this.employees.filter(employee =>
       employee.name.toLowerCase().indexOf(searchString.toLowerCase()) !== -1);
   }
-  onClick(employeeId: number) {
-    this._router.navigate(['/employees', employeeId], {
-      queryParams: { 'searchTearm': this.searchTerm, 'testParam': 'testValue' }
-    });
+
+  onDeleteNotification(id: number) {
+    const i = this.filteredEmployees.findIndex(e => e.id === id);
+    if (i !== -1) {
+      this.filteredEmployees.splice(i, 1);
+    }
   }
 }

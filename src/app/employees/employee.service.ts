@@ -45,7 +45,7 @@ export class EmployeeService {
 
     getEmployees(): Observable<Employee[]> {
         return of(this.listEmployees).pipe(
-            delay(3000)
+            delay(500)
         );
     }
 
@@ -53,7 +53,23 @@ export class EmployeeService {
         return this.listEmployees.find(e => e.id === id);
     }
     save(employee: Employee) {
-        this.listEmployees.push(employee);
-    }
+        if (employee.id === null) {
+          const maxId = this.listEmployees.reduce(function (e1, e2) {
+            return (e1.id > e2.id) ? e1 : e2;
+          }).id;
+          employee.id = maxId + 1;
+      
+          this.listEmployees.push(employee);
+        } else {
+          const foundIndex = this.listEmployees.findIndex(e => e.id === employee.id);
+          this.listEmployees[foundIndex] = employee;
+        }
+      }
 
+      deleteEmployee(id: number) {
+        const i = this.listEmployees.findIndex(e => e.id === id);
+        if (i !== -1) {
+          this.listEmployees.splice(i, 1);
+        }
+      }
 }
